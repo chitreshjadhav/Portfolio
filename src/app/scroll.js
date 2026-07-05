@@ -10,11 +10,13 @@ export function initScroll(world) {
   gsap.registerPlugin(ScrollTrigger)
   ScrollTrigger.config({ ignoreMobileResize: true })
 
-  const railLinks = [...document.querySelectorAll('.rail a')]
+  const railByHash = {}
+  document.querySelectorAll('.rail a').forEach(a => { railByHash[a.getAttribute('href')] = a })
 
   CHAPTERS.forEach((def, i) => {
     const section = document.querySelector(`[data-chapter="${def.id}"]`)
     if (!section) return
+    const railLink = railByHash['#' + section.id]
 
     const overlay = section.querySelector('.overlay')
     const items = overlay ? [...overlay.children] : []
@@ -47,7 +49,7 @@ export function initScroll(world) {
       },
       onToggle(self) {
         world.setActive(def.id, self.isActive)
-        railLinks[i]?.classList.toggle('active', self.isActive)
+        railLink?.classList.toggle('active', self.isActive)
       }
     })
 
@@ -59,6 +61,20 @@ export function initScroll(world) {
       onEnter: () => world.preload(def.id)
     })
   })
+
+  // the About interlude (not a 3D chapter) — rail dot + entrance reveal
+  const about = document.querySelector('#about')
+  if (about) {
+    const aboutRail = railByHash['#about']
+    ScrollTrigger.create({
+      trigger: about, start: 'top 55%', end: 'bottom 45%',
+      onToggle: self => aboutRail?.classList.toggle('active', self.isActive)
+    })
+    gsap.from(['#about .eyebrow', '#about .section-title', '#about .about-story > *', '#about .about-card'], {
+      autoAlpha: 0, y: 42, stagger: 0.08, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: about, start: 'top 72%', once: true }
+    })
+  }
 
   // EP04 character-status count-up, once, on approach
   ScrollTrigger.create({

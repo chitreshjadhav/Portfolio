@@ -131,6 +131,60 @@ a { color: var(--cyan); }
 .btn.primary { background: linear-gradient(90deg, var(--pink), var(--violet)); color: #fff; box-shadow: 0 0 24px rgba(255, 79, 163, 0.35); }
 .btn.ghost { color: var(--cyan); border: 1px solid rgba(79, 227, 255, 0.5); background: rgba(13, 15, 31, 0.55); }
 
+/* ---------- about: the operator file ---------- */
+.about {
+  position: relative; z-index: 1;
+  padding: 110px 0 90px;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(255, 79, 163, 0.07), transparent 55%),
+    radial-gradient(ellipse at 88% 100%, rgba(79, 227, 255, 0.06), transparent 55%),
+    var(--bg);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.about-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: 30px; margin-top: 26px; align-items: start; }
+@media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; } }
+.about-story .lead { color: var(--sakura); font-weight: 700; font-size: 1.18rem; line-height: 1.55; margin-bottom: 18px; }
+.about-story .lead em { font-style: normal; color: var(--cyan); }
+.about-story p { color: #ccd2f5; font-weight: 600; font-size: 1.02rem; line-height: 1.65; margin-bottom: 16px; }
+.about-story .accent { color: var(--pink); font-weight: 700; }
+.about-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.about-card {
+  background: var(--glass); border: 1px solid var(--line); border-radius: 26px;
+  padding: 26px 26px 24px;
+}
+.about-card h3 {
+  font-family: var(--font-display); font-size: 1.35rem; letter-spacing: 0.14em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
+}
+.about-card .row {
+  display: flex; justify-content: space-between; gap: 14px;
+  padding: 10px 0; border-bottom: 1px solid rgba(148, 163, 255, 0.14);
+  font-weight: 600; font-size: 0.9rem;
+}
+.about-card .row span:first-child { color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem; padding-top: 3px; white-space: nowrap; }
+.about-card .row span:last-child { color: #ccd2f5; text-align: right; }
+.about-journey {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 16px 0 4px;
+}
+.about-journey .j-label { color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem; font-weight: 600; margin-right: 2px; }
+.about-journey .j-arrow { color: var(--cyan); }
+.about-cta { display: block; text-align: center; margin-top: 18px; }
+
+/* ---------- company / logo chips ---------- */
+.logo-chip, .company-chip {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: rgba(13, 15, 31, 0.7);
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 6px 12px;
+  font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em; color: #ccd2f5;
+}
+.logo-chip img, .company-chip img { display: block; height: auto; }
+.company-chip { margin-left: auto; }
+.panel-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+.panel-head h3 { margin-bottom: 0; }
+
 /* ---------- panels / fact blocks ---------- */
 .panel {
   background: var(--glass); border: 1px solid var(--line);
