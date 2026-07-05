@@ -76,3 +76,20 @@ body.webgl-mode #top .stage { background: transparent; }
 body.webgl-mode #top .overlay { pointer-events: none; }
 body.webgl-mode #top .overlay a,
 body.webgl-mode #top .overlay button { pointer-events: auto; }
+
+/* Specific overrides for Episode 4 to prevent the media frame from being cut off on standard viewports */
+#ep04 .overlay {
+  padding-top: 55px;
+  padding-bottom: 20px;
+}
+#ep04 .panel {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+#ep04 .status-screen {
+  margin-top: 10px;
+}
+#ep04 .media-frame {
+  margin-top: 10px;
+}
+
