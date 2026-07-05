@@ -21,12 +21,15 @@ export function initDossiers(collapse) {
 
 // Motion: On/Off — persisted, beats prefers-reduced-motion in both directions.
 // A reload is the cleanest way to tear down / boot the 3D world.
+// State lives in the accessible name alone (no aria-pressed: pairing a
+// pressed state with a label that also flips double-encodes and confuses SRs).
 export function initMotionToggle(caps) {
   const btn = document.getElementById('motionToggle')
   if (!btn) return
   const on = caps.mode !== 'static'
-  btn.setAttribute('aria-pressed', String(on))
+  btn.removeAttribute('aria-pressed')
   btn.textContent = on ? 'Motion: On' : 'Motion: Off'
+  btn.classList.toggle('is-off', !on)
   btn.addEventListener('click', () => {
     localStorage.setItem('motion', on ? 'off' : 'on')
     location.reload()

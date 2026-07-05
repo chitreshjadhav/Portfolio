@@ -111,9 +111,15 @@ export function disposeGroup(root) {
   root.traverse(obj => {
     obj.geometry?.dispose?.()
     const m = obj.material
-    if (Array.isArray(m)) m.forEach(x => { if (!isCached(x)) { x.map?.dispose?.(); x.dispose() } })
-    else if (m && !isCached(m)) { m.map?.dispose?.(); m.dispose() }
+    if (Array.isArray(m)) m.forEach(disposeMat)
+    else if (m) disposeMat(m)
   })
+}
+
+function disposeMat(m) {
+  if (isCached(m)) return
+  if (m.map && m.map !== glowTex) m.map.dispose() // glowTex is shared across all chapters
+  m.dispose()
 }
 
 function isCached(mat) {

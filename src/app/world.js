@@ -33,13 +33,16 @@ export function createWorld(canvas, caps) {
   scene.add(dust, dust2)
 
   const chapters = new Map()
+  const byIndex = []
   CHAPTERS.forEach((def, index) => {
-    chapters.set(def.id, {
+    const ch = {
       def, index,
       handle: null, group: null,
-      loading: null, built: false,
+      loading: null, built: false, gen: 0,
       targetP: 0, smoothP: 0, active: false
-    })
+    }
+    chapters.set(def.id, ch)
+    byIndex[index] = ch
   })
 
   // dev-only continuity check: every cut must be invisible
@@ -64,13 +67,14 @@ export function createWorld(canvas, caps) {
     async preload(id) {
       const ch = chapters.get(id)
       if (!ch || ch.built || ch.loading) return ch?.loading
+      const gen = ch.gen // dispose bumps gen: a build finishing after disposal is discarded
       ch.loading = (async () => {
         const mod = await ch.def.load()
         const handle = await mod.build({ world, tier, station: stationZ(ch.index), index: ch.index })
+        if (ch.gen !== gen) { handle.dispose?.(); return }
         ch.handle = handle
         ch.group = handle.group
         if (ch.group) {
-          ch.group.position.z = 0 // chapters position themselves in world coords via station arg
           ch.group.visible = false
           scene.add(ch.group)
         }
@@ -79,7 +83,7 @@ export function createWorld(canvas, caps) {
         dirty = true
       })().catch(err => {
         console.error(`chapter ${id} failed to build`, err)
-        ch.loading = null
+        if (ch.gen === gen) ch.loading = null
       })
       return ch.loading
     },
@@ -118,6 +122,7 @@ export function createWorld(canvas, caps) {
     if (tier === 2) return // plenty of memory: keep visited chapters warm
     chapters.forEach(ch => {
       if (ch.built && Math.abs(ch.index - currentIndex) >= 3) {
+        ch.gen++
         ch.handle?.dispose?.()
         if (ch.group) { scene.remove(ch.group); ch.group = null }
         ch.handle = null
@@ -140,7 +145,7 @@ export function createWorld(canvas, caps) {
   }
 
   function applyCamera() {
-    const ch = [...chapters.values()].find(c => c.index === currentIndex)
+    const ch = byIndex[currentIndex]
     if (!ch) return
     const t = camCurve(ch.smoothP)
     const { from, to } = ch.def.cam
@@ -180,7 +185,7 @@ export function createWorld(canvas, caps) {
       }
     })
 
-    const cur = [...chapters.values()].find(c => c.index === currentIndex)
+    const cur = byIndex[currentIndex]
     const continuous = cur?.handle && (typeof cur.handle.continuous === 'function'
       ? cur.handle.continuous() : cur.handle.continuous)
     if (continuous) animating = true

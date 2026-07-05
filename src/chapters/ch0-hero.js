@@ -59,8 +59,9 @@ export async function build({ world, tier, station }) {
   const towers = new THREE.InstancedMesh(towerGeo, wireMat(0x3a4a9f, 0.5), towerCount)
   const m = new THREE.Matrix4()
   for (let i = 0; i < towerCount; i++) {
-    const x = (Math.random() - 0.5) * 220
-    if (Math.abs(x) < 14) continue // keep the core's stage clear
+    // keep the core's stage clear: towers spawn only outside |x| < 14
+    const side = Math.random() < 0.5 ? -1 : 1
+    const x = side * (14 + Math.random() * 96)
     const w = 2 + Math.random() * 4
     const h = 4 + Math.random() * 22
     const z = station - 40 - Math.random() * 120

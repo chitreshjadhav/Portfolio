@@ -27,7 +27,9 @@ export function initScroll(world) {
       } else {
         tl.fromTo(items,
           { autoAlpha: 0, y: 44 },
-          { autoAlpha: 1, y: 0, stagger: 0.035, duration: 0.16, ease: 'power2.out' }, 0.05)
+          // immediateRender so items are hidden from build time — without it they
+          // render visible at section entry, snap invisible at 5%, then fade in
+          { autoAlpha: 1, y: 0, stagger: 0.035, duration: 0.16, ease: 'power2.out', immediateRender: true }, 0.05)
         if (i < CHAPTERS.length - 1) {
           tl.to(items, { autoAlpha: 0, y: -34, stagger: 0.02, duration: 0.1, ease: 'power1.in' }, 0.88)
         }

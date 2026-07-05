@@ -38,10 +38,11 @@ function upgrade(figure, url, staticMode) {
   video.height = img.height
   video.setAttribute('aria-label', img.alt)
   video.src = url
+  let io = null
   if (staticMode) {
     video.controls = true
   } else {
-    const io = new IntersectionObserver(entries => {
+    io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting && e.intersectionRatio > 0.4) video.play().catch(() => {})
         else video.pause()
@@ -50,6 +51,7 @@ function upgrade(figure, url, staticMode) {
     io.observe(video)
   }
   video.addEventListener('error', () => {
+    io?.disconnect()
     video.replaceWith(img)
   }, { once: true })
   img.replaceWith(video)
