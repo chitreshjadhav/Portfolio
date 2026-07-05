@@ -1,0 +1,15 @@
+:root {
+  --bg: #0d0f1f;
+  --bg2: #141833;
+  --ink: #eef0ff;
+  --dim: #a6acd1;
+  --pink: #ff4fa3;
+  --sakura: #ffb7d5;
+  --cyan: #4fe3ff;
+  --violet: #8b5cf6;
+  --gold: #ffe14d;
+  --line: rgba(148, 163, 255, 0.22);
+  --glass: rgba(16, 19, 42, 0.82);
+  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-body: 'Rajdhani', 'Segoe UI', sans-serif;
+}

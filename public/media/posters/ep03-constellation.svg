@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#0d0f1f"/>
+  <g fill="none">
+    <circle cx="640" cy="380" r="240" stroke="#232849" stroke-width="2" stroke-dasharray="6 10"/>
+    <g stroke-width="3">
+      <circle cx="640" cy="140" r="34" stroke="#4fe3ff"/>
+      <circle cx="843" cy="212" r="34" stroke="#8b5cf6"/>
+      <circle cx="874" cy="440" r="34" stroke="#ffe14d"/>
+      <circle cx="742" cy="590" r="34" stroke="#4fe3ff"/>
+      <circle cx="538" cy="590" r="34" stroke="#ff4fa3"/>
+      <circle cx="406" cy="440" r="34" stroke="#8b5cf6"/>
+      <circle cx="437" cy="212" r="34" stroke="#ffe14d"/>
+      <circle cx="248" cy="330" r="26" stroke="#4fe3ff" opacity="0.7"/>
+      <circle cx="1032" cy="330" r="26" stroke="#ff4fa3" opacity="0.7"/>
+      <circle cx="316" cy="540" r="26" stroke="#ffe14d" opacity="0.7"/>
+      <circle cx="964" cy="540" r="26" stroke="#4fe3ff" opacity="0.7"/>
+    </g>
+    <g stroke="#ff4fa3" stroke-width="2" opacity="0.55">
+      <line x1="640" y1="380" x2="640" y2="174"/><line x1="640" y1="380" x2="812" y2="236"/>
+      <line x1="640" y1="380" x2="843" y2="424"/><line x1="640" y1="380" x2="726" y2="562"/>
+      <line x1="640" y1="380" x2="556" y2="562"/><line x1="640" y1="380" x2="438" y2="424"/>
+      <line x1="640" y1="380" x2="466" y2="238"/>
+    </g>
+  </g>
+  <g fill="#ff4fa3">
+    <polygon points="640,354 666,380 640,406 614,380"/>
+  </g>
+  <text x="60" y="90" font-family="Arial Narrow, sans-serif" font-size="44" letter-spacing="12" fill="#eef0ff" opacity="0.85">EP03 · TEN MARKETPLACES, ZERO ERRORS</text>
+</svg>

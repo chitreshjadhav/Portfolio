@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#0d0f1f"/>
+  <!-- rooftops -->
+  <g fill="none" stroke-width="3">
+    <path d="M0 520 H360 V420 H520 V520" stroke="#3a4a9f"/>
+    <path d="M760 520 H900 V440 H1120 V520 H1280" stroke="#3a4a9f"/>
+    <rect x="80" y="560" width="180" height="160" stroke="#232849"/>
+    <rect x="950" y="560" width="200" height="160" stroke="#232849"/>
+  </g>
+  <line x1="0" y1="520" x2="1280" y2="520" stroke="#232849" stroke-width="2"/>
+  <!-- leaping silhouette between the gap -->
+  <g stroke="#ffb7d5" stroke-width="9" stroke-linecap="round">
+    <line x1="600" y1="330" x2="660" y2="300"/>            <!-- spine, tilted into the jump -->
+    <line x1="660" y1="300" x2="740" y2="330"/>            <!-- leading leg reaching -->
+    <line x1="740" y1="330" x2="800" y2="300"/>
+    <line x1="600" y1="330" x2="540" y2="390"/>            <!-- trailing leg -->
+    <line x1="540" y1="390" x2="500" y2="360"/>
+    <line x1="650" y1="305" x2="710" y2="250"/>            <!-- arm thrown forward -->
+    <line x1="620" y1="320" x2="560" y2="290"/>
+  </g>
+  <circle cx="680" cy="270" r="24" fill="none" stroke="#ffb7d5" stroke-width="8"/>
+  <g stroke="#4fe3ff" stroke-width="3" opacity="0.6" fill="none">
+    <path d="M420 420 C 500 360, 560 340, 620 330"/>
+    <path d="M400 450 C 490 390, 560 365, 610 355"/>
+  </g>
+  <g fill="#ffe14d" opacity="0.9">
+    <circle cx="200" cy="180" r="3"/><circle cx="420" cy="120" r="2"/><circle cx="900" cy="150" r="3"/>
+    <circle cx="1100" cy="220" r="2"/><circle cx="640" cy="90" r="2"/>
+  </g>
+  <text x="60" y="90" font-family="Arial Narrow, sans-serif" font-size="44" letter-spacing="12" fill="#eef0ff" opacity="0.85">AFTER HOURS · ROOFTOP LINES</text>
+</svg>

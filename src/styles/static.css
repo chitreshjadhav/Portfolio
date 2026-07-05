@@ -1,0 +1,30 @@
+/* ---------- STATIC MODE ----------
+   Reached when: reduced motion, no WebGL, save-data, low-end device,
+   or the user flips the Motion toggle off. Also the closest cousin of
+   the no-JS experience (which simply never collapses the dossiers).
+   A complete, readable neon resume — no canvas, no pinning, no motion. */
+
+body.static-mode .chapter { height: auto; }
+body.static-mode .stage {
+  position: static; height: auto; overflow: visible;
+  padding: 48px 0;
+}
+body.static-mode #top .stage { padding-top: 120px; }
+body.static-mode .overlay { padding-top: 0; }
+body.static-mode .hint { display: none; }
+body.static-mode .rail { display: none; }
+
+/* dividers between chapters keep the episode rhythm without motion */
+body.static-mode .chapter + .chapter .stage {
+  border-top: 1px solid var(--line);
+}
+
+/* CSS-only safety net regardless of JS: honor reduced motion at the CSS layer too */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+}
