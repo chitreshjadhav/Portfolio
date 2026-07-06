@@ -101,12 +101,27 @@ body.webgl-mode #top .overlay button { pointer-events: auto; }
 #ep04 .panel li { font-size: 0.92rem; }
 /* ep04 is the busiest chapter (stat strip + panel + window) — trim a touch
    more so it clears shorter 768px laptops too */
-#ep04 .media-frame { max-width: 288px; }
 #ep04 .status-screen { margin-top: 6px; }
 #ep04 .status-screen .stat { padding-top: 4px; padding-bottom: 4px; }
 
 /* After-hours: the portrait clip is the tallest element on the site — keep the
    whole media row from pushing the intertitles off screen. */
-#afterhours .media-row .media-frame.lg[data-aspect="9/16"] { max-width: 190px; }
-#afterhours .media-row .media-frame.lg[data-aspect="16/9"] { max-width: 340px; }
+#afterhours .media-row .media-frame.lg[data-aspect="9/16"] { max-width: 168px; }
+#afterhours .media-row .media-frame.lg[data-aspect="16/9"] { max-width: 320px; }
 
+/* The top nav is fixed and ~60px tall. Because the stage centers its overlay
+   over the FULL viewport height, a tall chapter's eyebrow/title slid up behind
+   the nav ("spill at the top"). Reserve the nav's height at the top of every
+   story stage so content is centered in the space BELOW it instead. (The nav
+   fades to transparent at its lower edge, so ~52px clears the visible logo/
+   links while leaving as much room as possible for the content.) */
+.chapter:not(#top) .stage { padding-top: 52px; }
+
+/* ep03 is the tallest story chapter (long platform list + media window) — trim
+   so it centers cleanly under the reserved nav space, at 800px and 768px. */
+#ep03 .media-frame { max-width: 264px; }
+#ep03 .panel .plat { margin-top: 10px; padding: 8px 14px; font-size: 0.74rem; }
+/* builds (four dossiers + window) and ep04 are the next-tallest — cap their
+   windows so they clear the nav on 768px laptops as well. */
+#builds .media-frame { max-width: 336px; }
+#ep04 .media-frame { max-width: 232px; }
