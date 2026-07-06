@@ -49,5 +49,5 @@ Or push the repo to GitHub and import it at vercel.com — every push gets a
 preview URL. `vercel.json` sets caching (immutable hashed assets, 1-hour SWR
 for media so replaced clips show up quickly) and security headers.
 
-After the first deploy, update the canonical/OG URLs in `index.html` if the
-production domain differs from `chitresh-portfolio.vercel.app`.
+Live at `https://chitreshjadhav.vercel.app`. If the production domain changes,
+update the canonical/OG URLs in `index.html` to match.
