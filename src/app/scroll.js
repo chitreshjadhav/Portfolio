@@ -44,8 +44,9 @@ export function initScroll(world) {
       start: 'top top',
       end: 'bottom bottom',
       onUpdate(self) {
-        world.setProgress(def.id, self.progress)
-        tl?.progress(self.progress)
+        world.setProgress(def.id, self.progress) // world lerps internally (smoothP)
+        // overlay timelines get the same inertia so text never snaps with raw scroll
+        if (tl) gsap.to(tl, { progress: self.progress, duration: 0.35, ease: 'power2.out', overwrite: true })
       },
       onToggle(self) {
         world.setActive(def.id, self.isActive)
@@ -70,7 +71,7 @@ export function initScroll(world) {
       trigger: about, start: 'top 55%', end: 'bottom 45%',
       onToggle: self => aboutRail?.classList.toggle('active', self.isActive)
     })
-    gsap.from(['#about .eyebrow', '#about .section-title', '#about .about-story > *', '#about .about-card'], {
+    gsap.from(['#about .about-story > *', '#about .about-card'], {
       autoAlpha: 0, y: 42, stagger: 0.08, duration: 0.7, ease: 'power2.out',
       scrollTrigger: { trigger: about, start: 'top 72%', once: true }
     })

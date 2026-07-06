@@ -3,7 +3,7 @@ import { PALETTE, wireMat, neonBox, glowSprite, textSprite, disposeGroup } from 
 import { makeDynamicPoints } from '../lib/particles.js'
 import { MARKETPLACES } from '../content/resume.js'
 
-// CH4 — EP03, TEN MARKETPLACES ZERO ERRORS. Eleven labeled gates in a 360°
+// CH4 — EP03, TEN MARKETPLACES. Eleven labeled gates in a 360°
 // ring around a QC hub — the old carousel reborn, except now the camera is
 // inside it, sweeping a full orbit. Delivery particles stream out through
 // every gate. Climax: the PASS stamp slams in with a shockwave.

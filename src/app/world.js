@@ -25,6 +25,60 @@ export function createWorld(canvas, caps) {
 
   const camera = new THREE.PerspectiveCamera(55, 2, 0.1, 320)
 
+  // ---- cursor gravitational-lens pass ----
+  // While the black-hole cursor is active the scene renders into a target and
+  // a screen-space shader deflects pixels toward the lens within a small
+  // radius (point-mass deflection ∝ 1/r, faded to zero at the rim so there is
+  // no seam), with slight chromatic separation. Costs one extra blit, and only
+  // while the cursor is live — idle frames keep the direct-to-screen path.
+  const lens = { x: -1e4, y: -1e4, amt: 0, radius: 110, core: 11 }
+  let lensRT = null
+  const lensSize = new THREE.Vector2()
+  const lensMat = new THREE.ShaderMaterial({
+    depthTest: false,
+    depthWrite: false,
+    uniforms: {
+      tDiffuse: { value: null },
+      uRes: { value: new THREE.Vector2(1, 1) },
+      uLens: { value: new THREE.Vector2(-1e4, -1e4) },
+      uRadius: { value: 1 },
+      uCore: { value: 1 },
+      uAmt: { value: 0 }
+    },
+    vertexShader: 'void main() { gl_Position = vec4(position.xy, 0.0, 1.0); }',
+    fragmentShader: `
+      uniform sampler2D tDiffuse;
+      uniform vec2 uRes;
+      uniform vec2 uLens;
+      uniform float uRadius;
+      uniform float uCore;
+      uniform float uAmt;
+      void main() {
+        vec2 uv = gl_FragCoord.xy / uRes;
+        vec2 d = gl_FragCoord.xy - uLens;
+        float r = max(length(d), 0.0001);
+        vec4 col;
+        if (r < uRadius && uAmt > 0.001) {
+          vec2 dir = d / r;
+          float x = r / uRadius;
+          float fall = (1.0 - x) * (1.0 - x);
+          float defl = uAmt * fall * uCore * uCore * 3.2 / max(r, uCore);
+          float ca = defl * 0.14;
+          col = vec4(
+            texture2D(tDiffuse, uv - dir * (defl + ca) / uRes).r,
+            texture2D(tDiffuse, uv - dir * defl / uRes).g,
+            texture2D(tDiffuse, uv - dir * max(defl - ca, 0.0) / uRes).b,
+            1.0);
+        } else {
+          col = texture2D(tDiffuse, uv);
+        }
+        gl_FragColor = linearToOutputTexel(col);
+      }`
+  })
+  const lensScene = new THREE.Scene()
+  lensScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), lensMat))
+  const lensCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
+
   // ambient set dressing that follows the camera between stations
   const grid = gridFloor()
   scene.add(grid)
@@ -95,6 +149,14 @@ export function createWorld(canvas, caps) {
       dirty = true
     },
 
+    // cursor black hole: CSS-pixel position + 0..1 strength (0 disables the pass)
+    setLens(x, y, amt, radius, core) {
+      lens.x = x; lens.y = y; lens.amt = amt
+      if (radius) lens.radius = radius
+      if (core) lens.core = core
+      dirty = true
+    },
+
     setActive(id, active) {
       const ch = chapters.get(id)
       if (!ch) return
@@ -132,22 +194,16 @@ export function createWorld(canvas, caps) {
     })
   }
 
-  // camera: linear pose lerp with a "read hold" in the middle of each chapter
-  // (move in the first and last thirds, hold steady while the copy is up)
-  function camCurve(p) {
-    const a = smoothstep(p / 0.38)
-    const b = smoothstep((p - 0.62) / 0.38)
-    return (a + b) / 2
-  }
-  function smoothstep(x) {
-    x = Math.min(1, Math.max(0, x))
-    return x * x * (3 - 2 * x)
-  }
-
+  // Camera rides the rails at constant progress-rate within each chapter.
+  // Poses are C0-continuous (chapter[i].to == chapter[i+1].from), so a plain
+  // linear map keeps velocity non-zero across every boundary — no ease-to-zero
+  // stop between sections, no mid-chapter "read hold" freeze. The smoothP
+  // exponential lerp below absorbs the speed change at cuts, so the flight
+  // reads as one continuous glide rather than a series of starts and stops.
   function applyCamera() {
     const ch = byIndex[currentIndex]
     if (!ch) return
-    const t = camCurve(ch.smoothP)
+    const t = ch.smoothP
     const { from, to } = ch.def.cam
     pos.copy(fromV.set(...from.pos)).lerp(toV.set(...to.pos), t)
     look.copy(fromV.set(...from.look)).lerp(toV.set(...to.look), t)
@@ -202,7 +258,24 @@ export function createWorld(canvas, caps) {
       if (ch.handle?.update && ch.group?.visible) ch.handle.update(dt, now / 1000, ch.smoothP)
     })
     applyCamera()
-    renderer.render(scene, camera)
+    if (lens.amt > 0.01) {
+      renderer.getDrawingBufferSize(lensSize)
+      if (!lensRT) lensRT = new THREE.WebGLRenderTarget(lensSize.x, lensSize.y)
+      else if (lensRT.width !== lensSize.x || lensRT.height !== lensSize.y) lensRT.setSize(lensSize.x, lensSize.y)
+      renderer.setRenderTarget(lensRT)
+      renderer.render(scene, camera)
+      renderer.setRenderTarget(null)
+      const dpr = renderer.getPixelRatio()
+      lensMat.uniforms.tDiffuse.value = lensRT.texture
+      lensMat.uniforms.uRes.value.copy(lensSize)
+      lensMat.uniforms.uLens.value.set(lens.x * dpr, lensSize.y - lens.y * dpr)
+      lensMat.uniforms.uRadius.value = lens.radius * dpr
+      lensMat.uniforms.uCore.value = lens.core * dpr
+      lensMat.uniforms.uAmt.value = lens.amt
+      renderer.render(lensScene, lensCam)
+    } else {
+      renderer.render(scene, camera)
+    }
     dirty = false
 
     // live quality guard: sustained slow frames step the DPR down once per level

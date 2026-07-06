@@ -93,3 +93,8 @@ body.webgl-mode #top .overlay button { pointer-events: auto; }
   margin-top: 10px;
 }
 
+/* Origin: the college photo shares the stage with the education panel —
+   keep it compact so the sticky 100svh stage never clips it */
+#origin .overlay { padding-top: 55px; }
+#origin .media-frame { max-width: 380px; margin-top: 14px; }
+
