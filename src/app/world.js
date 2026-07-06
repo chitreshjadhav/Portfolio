@@ -211,11 +211,13 @@ export function createWorld(canvas, caps) {
     ch.handle?.updateCamera?.(ch.smoothP, pose)
     camera.position.copy(pose.pos)
     camera.lookAt(pose.look)
-    // ambience follows the flight
-    const zBase = Math.round(camera.position.z / 20) * 20
-    grid.position.z = zBase
-    dust.position.z = zBase
-    dust2.position.z = zBase
+    // ambience follows the flight. The grid snaps in 20-unit steps (its cell
+    // is 400/120 ≈ 3.33 units — 20 is a whole multiple, so the snap is
+    // invisible). The dust clouds must follow CONTINUOUSLY: snapping them
+    // teleported every particle at once, a visible hitch during the flight.
+    grid.position.z = Math.round(camera.position.z / 20) * 20
+    dust.position.z = camera.position.z
+    dust2.position.z = camera.position.z
   }
 
   // ---- demand-driven render loop ----
@@ -230,16 +232,18 @@ export function createWorld(canvas, caps) {
     const dt = Math.min((now - last) / 1000, 0.05)
     last = now
 
-    let animating = false
+    // softer inertia (dt*6) absorbs discrete wheel steps into one glide
+    let scrollAnim = false
     chapters.forEach(ch => {
       const d = ch.targetP - ch.smoothP
       if (Math.abs(d) > 0.0005) {
-        ch.smoothP += d * Math.min(1, dt * 9)
-        animating = true
+        ch.smoothP += d * Math.min(1, dt * 6)
+        scrollAnim = true
       } else {
         ch.smoothP = ch.targetP
       }
     })
+    let animating = scrollAnim
 
     const cur = byIndex[currentIndex]
     const continuous = cur?.handle && (typeof cur.handle.continuous === 'function'
@@ -248,7 +252,9 @@ export function createWorld(canvas, caps) {
 
     if (!dirty && !animating) return
 
-    if (frameBudget) {
+    // lite tier idles continuous scenes at 30fps, but the scroll flight always
+    // gets full frame rate — capping it is what reads as stutter
+    if (frameBudget && !scrollAnim) {
       acc += dt
       if (acc < frameBudget) return
       acc = 0

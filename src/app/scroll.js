@@ -46,7 +46,7 @@ export function initScroll(world) {
       onUpdate(self) {
         world.setProgress(def.id, self.progress) // world lerps internally (smoothP)
         // overlay timelines get the same inertia so text never snaps with raw scroll
-        if (tl) gsap.to(tl, { progress: self.progress, duration: 0.35, ease: 'power2.out', overwrite: true })
+        if (tl) gsap.to(tl, { progress: self.progress, duration: 0.45, ease: 'power2.out', overwrite: true })
       },
       onToggle(self) {
         world.setActive(def.id, self.isActive)
@@ -60,6 +60,22 @@ export function initScroll(world) {
       start: 'top 250%',
       once: true,
       onEnter: () => world.preload(def.id)
+    })
+  })
+
+  // Anchor links (rail dots + top nav) land MID-chapter, not at the sticky
+  // section's first frame — at progress 0 the overlay copy is still faded out,
+  // so a native jump looked like a dead click. 40% in, the text is fully up.
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    const href = a.getAttribute('href')
+    if (!href || href.length < 2) return
+    a.addEventListener('click', e => {
+      const sec = document.querySelector(href)
+      if (!sec || !sec.classList.contains('chapter') || sec.id === 'top') return
+      e.preventDefault()
+      const y = sec.offsetTop + Math.max(0, (sec.offsetHeight - innerHeight) * 0.4)
+      window.scrollTo({ top: y, behavior: 'smooth' })
+      history.replaceState(null, '', href)
     })
   })
 

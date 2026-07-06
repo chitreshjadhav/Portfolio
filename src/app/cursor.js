@@ -148,65 +148,104 @@ export function initCursorLens(caps, world) {
       }
     }
 
-    // ---- the hole itself, warped along its velocity ----
+    // ---- the hole itself: Gargantua, pocket-sized ----
+    // Interstellar anatomy — a razor-thin accretion disk seen edge-on. The far
+    // side of the disk is lensed into a vertical halo ring wrapping over and
+    // under the shadow; the near side crosses IN FRONT of the shadow's lower
+    // half; doppler beaming makes the approaching (left) side burn brighter.
+    // Warm white→amber, with only a whisper of the site's pink at the rim.
     ctx.save()
     ctx.translate(bh.x, bh.y)
     ctx.rotate(velA)
     ctx.scale(1 + warp, 1 - warp * 0.6)
     ctx.rotate(-velA)
 
-    // ambient glow — soft, no rim
-    const halo = ctx.createRadialGradient(0, 0, E * 0.5, 0, 0, E * 2.6)
-    halo.addColorStop(0, 'rgba(79, 227, 255, 0.10)')
-    halo.addColorStop(0.5, 'rgba(139, 92, 246, 0.05)')
-    halo.addColorStop(1, 'rgba(139, 92, 246, 0)')
+    const S = E * 0.55 // shadow radius
+
+    // draws the flattened disk band. Doppler beaming is an OFFSET radial
+    // hotspot on the approaching arm — gradients only, no clips, no seams.
+    const diskBand = a => {
+      ctx.save()
+      ctx.translate(0, E * 0.05)
+      ctx.scale(1, 0.16)
+      const g = ctx.createRadialGradient(0, 0, E * 0.5, 0, 0, E * 2.15)
+      g.addColorStop(0, 'rgba(255, 243, 224, 0)')
+      g.addColorStop(0.28, 'rgba(255, 243, 224, 0.95)')
+      g.addColorStop(0.55, 'rgba(255, 191, 118, 0.75)')
+      g.addColorStop(1, 'rgba(255, 138, 61, 0)')
+      ctx.globalAlpha = a
+      ctx.fillStyle = g
+      ctx.beginPath(); ctx.arc(0, 0, E * 2.15, 0, Math.PI * 2); ctx.fill()
+      const gb = ctx.createRadialGradient(-E * 1.05, 0, 0, -E * 1.05, 0, E * 1.5)
+      gb.addColorStop(0, 'rgba(255, 252, 245, 0.9)')
+      gb.addColorStop(1, 'rgba(255, 252, 245, 0)')
+      ctx.globalAlpha = a * 0.7
+      ctx.fillStyle = gb
+      ctx.beginPath(); ctx.arc(0, 0, E * 2.15, 0, Math.PI * 2); ctx.fill()
+      ctx.restore()
+    }
+
+    // soft thermal glow, pink only at the very rim to sit in the palette
+    const glow = ctx.createRadialGradient(0, 0, S, 0, 0, E * 2.7)
+    glow.addColorStop(0, 'rgba(255, 176, 96, 0.07)')
+    glow.addColorStop(0.6, 'rgba(255, 130, 120, 0.025)')
+    glow.addColorStop(1, 'rgba(255, 79, 163, 0)')
     ctx.globalAlpha = master
+    ctx.fillStyle = glow
+    ctx.beginPath(); ctx.arc(0, 0, E * 2.7, 0, Math.PI * 2); ctx.fill()
+
+    // lensed halo — the far side of the disk bent over/under the shadow
+    const halo = ctx.createRadialGradient(0, 0, S * 1.05, 0, 0, E * 1.35)
+    halo.addColorStop(0, 'rgba(255, 240, 214, 0)')
+    halo.addColorStop(0.35, 'rgba(255, 240, 214, 0.55)')
+    halo.addColorStop(0.6, 'rgba(255, 187, 112, 0.30)')
+    halo.addColorStop(1, 'rgba(255, 138, 61, 0)')
+    ctx.globalAlpha = master * 0.32
     ctx.fillStyle = halo
-    ctx.beginPath(); ctx.arc(0, 0, E * 2.6, 0, Math.PI * 2); ctx.fill()
+    ctx.beginPath(); ctx.arc(0, 0, E * 1.35, 0, Math.PI * 2); ctx.fill()
 
-    // photon ring: a whisper of a full circle...
-    ctx.lineCap = 'round'
-    ctx.globalAlpha = master * 0.22
-    ctx.strokeStyle = '#bfe9ff'
-    ctx.lineWidth = 1
-    ctx.beginPath(); ctx.arc(0, 0, E, 0, Math.PI * 2); ctx.stroke()
+    // far side of the disk (will be occluded by the shadow)
+    diskBand(master * 0.8)
 
-    // ...with a doppler-bright arc sweeping it (approaching side beams)
-    const sweep = t * 0.7
-    for (const [span, alpha, lw, col, blur] of [
-      [2.4, 0.28, 2.6, 'rgba(79, 227, 255, 1)', 10],
-      [1.5, 0.5, 1.8, 'rgba(191, 233, 255, 1)', 8],
-      [0.7, 0.75, 1.2, 'rgba(255, 235, 245, 1)', 6]
-    ]) {
-      ctx.globalAlpha = master * alpha
-      ctx.strokeStyle = col
-      ctx.lineWidth = lw
-      ctx.shadowColor = 'rgba(79, 227, 255, 0.8)'
-      ctx.shadowBlur = blur
-      ctx.beginPath(); ctx.arc(0, 0, E, sweep - span / 2, sweep + span / 2); ctx.stroke()
-    }
-    ctx.shadowBlur = 0
-
-    // accretion arcs, counter-rotating, tucked between horizon and ring
-    for (const [rad, spin, span, col, lw, alpha] of [
-      [E * 0.74, t * 2.1, 1.9, 'rgba(255, 79, 163, 1)', 1.6, 0.3],
-      [E * 0.9, -t * 1.5, 1.3, 'rgba(79, 227, 255, 1)', 1.2, 0.26]
-    ]) {
-      ctx.globalAlpha = master * alpha
-      ctx.strokeStyle = col
-      ctx.lineWidth = lw
-      ctx.beginPath(); ctx.arc(0, 0, rad, spin, spin + span); ctx.stroke()
-    }
-
-    // event horizon — soft-edged void, drawn over the light (it swallows it)
+    // the shadow — a soft-edged void that swallows everything behind it
     ctx.globalCompositeOperation = 'source-over'
-    const void_ = ctx.createRadialGradient(0, 0, 0, 0, 0, CORE * 1.3)
-    void_.addColorStop(0, 'rgba(2, 3, 10, 1)')
-    void_.addColorStop(0.72, 'rgba(2, 3, 10, 0.97)')
-    void_.addColorStop(1, 'rgba(2, 3, 10, 0)')
+    const void_ = ctx.createRadialGradient(0, 0, 0, 0, 0, S * 1.12)
+    void_.addColorStop(0, 'rgba(3, 2, 8, 1)')
+    void_.addColorStop(0.82, 'rgba(3, 2, 8, 0.98)')
+    void_.addColorStop(1, 'rgba(3, 2, 8, 0)')
     ctx.globalAlpha = master
     ctx.fillStyle = void_
-    ctx.beginPath(); ctx.arc(0, 0, CORE * 1.3, 0, Math.PI * 2); ctx.fill()
+    ctx.beginPath(); ctx.arc(0, 0, S * 1.12, 0, Math.PI * 2); ctx.fill()
+
+    // photon ring hugging the shadow — the last orbit of light
+    ctx.globalCompositeOperation = 'lighter'
+    ctx.globalAlpha = master * 0.32
+    ctx.strokeStyle = 'rgba(255, 244, 228, 0.85)'
+    ctx.lineWidth = 0.8
+    ctx.shadowColor = 'rgba(255, 205, 150, 0.6)'
+    ctx.shadowBlur = 3
+    ctx.beginPath(); ctx.arc(0, 0, S * 1.06, 0, Math.PI * 2); ctx.stroke()
+    ctx.shadowBlur = 0
+
+    // the far side of the disk, gravitationally bent over the TOP of the
+    // shadow — the Interstellar arch. It springs from the disk line on both
+    // sides (arc endpoints sit exactly on y=0) and wraps across the crown;
+    // a dimmer, demagnified mirror image hugs the underside.
+    const arch = (r, a0, a1, w, col, alpha) => {
+      ctx.globalAlpha = master * alpha
+      ctx.strokeStyle = col
+      ctx.lineWidth = w
+      ctx.lineCap = 'round'
+      ctx.beginPath(); ctx.arc(0, 0, r, a0, a1); ctx.stroke()
+    }
+    arch(E * 0.85, Math.PI, 2 * Math.PI, E * 0.30, 'rgba(255, 170, 95, 0.35)', 0.5)  // soft outer glow
+    arch(E * 0.85, Math.PI, 2 * Math.PI, E * 0.16, 'rgba(255, 214, 160, 0.8)', 0.55) // arch body
+    arch(E * 0.85, Math.PI * 1.04, Math.PI * 1.55, E * 0.11, 'rgba(255, 248, 238, 0.9)', 0.5) // doppler shoulder
+    arch(E * 0.72, 0, Math.PI, E * 0.10, 'rgba(255, 190, 130, 0.7)', 0.28)           // under-arch
+
+    // near side of the disk crossing in front of the shadow — the signature
+    // Interstellar silhouette. Full redraw at reduced weight: no clip seams.
+    diskBand(master * 0.6)
 
     ctx.restore()
     ctx.globalAlpha = 1
