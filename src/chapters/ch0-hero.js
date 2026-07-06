@@ -76,17 +76,19 @@ export async function build({ world, tier, station }) {
   cityGlow.position.set(0, 4, station - 90)
   group.add(cityGlow)
 
-  // ---- drag to orbit (enhancement only; released capture fixes the old bug) ----
-  const canvas = world.canvas
+  // ---- drag to orbit (enhancement only) ----
+  // The WebGL canvas sits behind the DOM (main has a higher z-index), so it
+  // never receives pointer events directly. We listen on window instead —
+  // pointerdown/move bubble there no matter which element is on top — and gate
+  // to the hero (lastP < 0.12), ignoring drags that start on the CTA controls.
   let dragging = false, lastX = 0, lastY = 0
   let theta = 0.6, phi = 1.15
   let lastP = 0
 
   function onDown(e) {
     if (lastP > 0.12) return
+    if (e.target.closest?.('a, button')) return // let the hero CTAs work
     dragging = true; lastX = e.clientX; lastY = e.clientY
-    canvas.setPointerCapture(e.pointerId)
-    canvas.style.cursor = 'grabbing'
   }
   function onMove(e) {
     if (!dragging) return
@@ -95,16 +97,13 @@ export async function build({ world, tier, station }) {
     lastX = e.clientX; lastY = e.clientY
     world.requestRender()
   }
-  function onUp(e) {
-    if (!dragging) return
+  function onUp() {
     dragging = false
-    if (canvas.hasPointerCapture?.(e.pointerId)) canvas.releasePointerCapture(e.pointerId)
-    canvas.style.cursor = ''
   }
-  canvas.addEventListener('pointerdown', onDown)
-  canvas.addEventListener('pointermove', onMove)
-  canvas.addEventListener('pointerup', onUp)
-  canvas.addEventListener('pointercancel', onUp)
+  window.addEventListener('pointerdown', onDown)
+  window.addEventListener('pointermove', onMove)
+  window.addEventListener('pointerup', onUp)
+  window.addEventListener('pointercancel', onUp)
 
   const center = new THREE.Vector3(0, 1.2, station)
   const orbitPos = new THREE.Vector3()
@@ -144,10 +143,10 @@ export async function build({ world, tier, station }) {
     },
     setActive() {},
     dispose() {
-      canvas.removeEventListener('pointerdown', onDown)
-      canvas.removeEventListener('pointermove', onMove)
-      canvas.removeEventListener('pointerup', onUp)
-      canvas.removeEventListener('pointercancel', onUp)
+      window.removeEventListener('pointerdown', onDown)
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
       disposeGroup(group)
     }
   }
