@@ -33,7 +33,7 @@ export async function build({ tier, station }) {
   const copies = tier === 2 ? 2 : 1
   for (let c = 0; c < copies; c++) {
     ATTRIBUTES.forEach((word, i) => {
-      const spr = textSprite(word, { color: i % 3 === 0 ? '#ff4fa3' : i % 3 === 1 ? '#4fe3ff' : '#ffe14d', px: 34 })
+      const spr = textSprite(word, { color: i % 3 === 0 ? '#ffb31e' : i % 3 === 1 ? '#4fe3ff' : '#ffe14d', px: 34 })
       spr.material.opacity = 0.9
       const t0 = (i + c * ATTRIBUTES.length) / (ATTRIBUTES.length * copies)
       tags.push({ spr, t0, jitter: (Math.random() - 0.5) * 2.4, lift: (Math.random() - 0.5) * 2 })

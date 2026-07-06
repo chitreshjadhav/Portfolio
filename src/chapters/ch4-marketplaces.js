@@ -63,7 +63,7 @@ export async function build({ tier, station }) {
   // the PASS stamp
   const stamp = new THREE.Group()
   const stampRing = new THREE.Mesh(new THREE.TorusGeometry(2.2, 0.16, 8, 48), wireMat(PALETTE.pink, 1))
-  const stampText = textSprite('PASS', { color: '#ff4fa3', px: 72 })
+  const stampText = textSprite('PASS', { color: '#ffb31e', px: 72 })
   stamp.add(stampRing, stampText)
   stamp.position.set(0, CENTER_Y + 1.5, station + 6)
   stamp.rotation.z = -0.2

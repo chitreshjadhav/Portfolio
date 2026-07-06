@@ -9,8 +9,8 @@
       <rect x="270" y="310" width="26" height="66" stroke="#4fe3ff"/>
       <rect x="310" y="250" width="26" height="126" stroke="#4fe3ff"/>
     </g>
-    <rect x="480" y="180" width="320" height="200" rx="10" stroke="#ff4fa3"/>
-    <path d="M510 330 L560 290 L610 310 L660 250 L710 270 L770 220" stroke="#ff4fa3"/>
+    <rect x="480" y="180" width="320" height="200" rx="10" stroke="#ffb31e"/>
+    <path d="M510 330 L560 290 L610 310 L660 250 L710 270 L770 220" stroke="#ffb31e"/>
     <g transform="rotate(8 1020 320)">
       <rect x="880" y="220" width="280" height="180" rx="10" stroke="#8b5cf6"/>
       <line x1="910" y1="270" x2="1090" y2="270" stroke="#8b5cf6"/>
@@ -20,6 +20,6 @@
     <circle cx="640" cy="530" r="70" stroke="#ffe14d"/>
     <path d="M640 530 L640 470 A60 60 0 0 1 692 560 Z" stroke="#ffe14d" fill="#ffe14d" fill-opacity="0.15"/>
   </g>
-  <polygon points="640,430 656,446 640,462 624,446" fill="#ff4fa3"/>
+  <polygon points="640,430 656,446 640,462 624,446" fill="#ffb31e"/>
   <text x="60" y="90" font-family="Arial Narrow, sans-serif" font-size="44" letter-spacing="12" fill="#eef0ff" opacity="0.85">EP04 · NOW AIRING — THE COMMAND DECK</text>
 </svg>

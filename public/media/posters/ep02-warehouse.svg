@@ -13,7 +13,7 @@
     <rect x="980" y="430" width="150" height="120" stroke="#4fe3ff"/>
     <rect x="1000" y="320" width="120" height="95" stroke="#8b5cf6" opacity="0.8"/>
     <rect x="420" y="440" width="90" height="75" stroke="#4fe3ff" opacity="0.8"/>
-    <rect x="760" y="440" width="90" height="75" stroke="#ff4fa3" opacity="0.9"/>
+    <rect x="760" y="440" width="90" height="75" stroke="#ffb31e" opacity="0.9"/>
     <rect x="540" y="450" width="60" height="50" stroke="#4fe3ff" opacity="0.6"/>
     <rect x="690" y="450" width="60" height="50" stroke="#4fe3ff" opacity="0.6"/>
   </g>

@@ -64,7 +64,7 @@ export async function build({ tier, station }) {
   ;[
     ['Ticketing rule?', '#4fe3ff'],
     ['Ask the bot', '#ffe14d'],
-    ['SOP found ✓', '#ff4fa3']
+    ['SOP found ✓', '#ffb31e']
   ].forEach(([txt, col], i) => {
     const b = textSprite(txt, { color: col, px: 26, font: 'Rajdhani' })
     b.position.set(6.5 + (i % 2) * 1.2, 1.4 + i * 1.15, deckZ + 2)
@@ -101,7 +101,7 @@ export async function build({ tier, station }) {
   group.add(intake)
 
   // ---- NOW AIRING title ----
-  const airing = textSprite('NOW AIRING', { color: '#ff4fa3', px: 60 })
+  const airing = textSprite('NOW AIRING', { color: '#ffb31e', px: 60 })
   airing.position.set(0, 6.3, deckZ - 3)
   airing.material.opacity = 0
   const airingBase = airing.scale.clone()
@@ -219,7 +219,7 @@ function drawScreen(s, t) {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ctx.fillStyle = 'rgba(13,15,31,0.85)'
   ctx.fillRect(0, 0, canvas.width, canvas.height)
-  ctx.strokeStyle = kind === 0 ? '#4fe3ff' : kind === 1 ? '#8b5cf6' : '#ff4fa3'
+  ctx.strokeStyle = kind === 0 ? '#4fe3ff' : kind === 1 ? '#8b5cf6' : '#ffb31e'
   ctx.lineWidth = 2
   if (kind === 0) {
     for (let i = 0; i < 8; i++) {
@@ -251,7 +251,7 @@ function drawDial(c, tex, p) {
   ctx.arc(128, 128, 96, Math.PI * 0.75, Math.PI * 2.25)
   ctx.stroke()
   const frac = 0.85 - smooth((p - 0.3) / 0.5) * 0.62
-  ctx.strokeStyle = frac > 0.5 ? '#ff4fa3' : '#4fe3ff'
+  ctx.strokeStyle = frac > 0.5 ? '#ffb31e' : '#4fe3ff'
   ctx.beginPath()
   ctx.arc(128, 128, 96, Math.PI * 0.75, Math.PI * (0.75 + 1.5 * frac))
   ctx.stroke()
@@ -259,7 +259,7 @@ function drawDial(c, tex, p) {
   ctx.font = "44px 'Bebas Neue', sans-serif"
   ctx.textAlign = 'center'
   ctx.fillText('RETURNS', 128, 118)
-  ctx.fillStyle = frac > 0.5 ? '#ff4fa3' : '#4fe3ff'
+  ctx.fillStyle = frac > 0.5 ? '#ffb31e' : '#4fe3ff'
   ctx.fillText(`${Math.round(frac * 100)}%`, 128, 168)
   tex.needsUpdate = true
 }

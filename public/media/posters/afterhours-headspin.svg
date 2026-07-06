@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280">
   <rect width="720" height="1280" fill="#0d0f1f"/>
   <g fill="none">
-    <ellipse cx="360" cy="1050" rx="230" ry="46" stroke="#ff4fa3" stroke-width="3" opacity="0.8"/>
+    <ellipse cx="360" cy="1050" rx="230" ry="46" stroke="#ffb31e" stroke-width="3" opacity="0.8"/>
     <ellipse cx="360" cy="1050" rx="300" ry="62" stroke="#232849" stroke-width="2"/>
     <g stroke="#4fe3ff" stroke-width="3" opacity="0.5">
       <path d="M160 700 A 260 260 0 0 1 560 700"/>
@@ -9,15 +9,15 @@
     </g>
   </g>
   <!-- inverted particle silhouette: headspin, legs in V -->
-  <g stroke="#ffb7d5" stroke-width="10" stroke-linecap="round">
+  <g stroke="#ffd98a" stroke-width="10" stroke-linecap="round">
     <line x1="360" y1="960" x2="360" y2="800"/>            <!-- spine (inverted) -->
     <line x1="360" y1="800" x2="250" y2="640"/>            <!-- leg L -->
     <line x1="360" y1="800" x2="480" y2="660"/>            <!-- leg R -->
     <line x1="360" y1="900" x2="290" y2="850"/>            <!-- arm L tucked -->
     <line x1="360" y1="900" x2="430" y2="850"/>            <!-- arm R tucked -->
   </g>
-  <circle cx="360" cy="990" r="34" fill="none" stroke="#ffb7d5" stroke-width="9"/>
-  <g fill="#ffb7d5" opacity="0.9">
+  <circle cx="360" cy="990" r="34" fill="none" stroke="#ffd98a" stroke-width="9"/>
+  <g fill="#ffd98a" opacity="0.9">
     <circle cx="238" cy="620" r="5"/><circle cx="266" cy="662" r="4"/><circle cx="494" cy="642" r="5"/>
     <circle cx="466" cy="684" r="4"/><circle cx="330" cy="760" r="4"/><circle cx="396" cy="748" r="4"/>
   </g>
@@ -26,5 +26,5 @@
     <circle cx="590" cy="1000" r="3"/><circle cx="360" cy="560" r="3"/>
   </g>
   <text x="60" y="120" font-family="Arial Narrow, sans-serif" font-size="52" letter-spacing="14" fill="#eef0ff" opacity="0.9">SPIN</text>
-  <text x="60" y="170" font-family="Arial Narrow, sans-serif" font-size="26" letter-spacing="8" fill="#ffb7d5" opacity="0.8">ANGULAR MOMENTUM IS ANGULAR MOMENTUM</text>
+  <text x="60" y="170" font-family="Arial Narrow, sans-serif" font-size="26" letter-spacing="8" fill="#ffd98a" opacity="0.8">ANGULAR MOMENTUM IS ANGULAR MOMENTUM</text>
 </svg>

@@ -82,7 +82,7 @@ export function createWorld(canvas, caps) {
   // ambient set dressing that follows the camera between stations
   const grid = gridFloor()
   scene.add(grid)
-  const dust = makePoints(tier === 2 ? 500 : 220, { color: 0xff6fb3, size: 0.09, spread: 90, opacity: 0.5 })
+  const dust = makePoints(tier === 2 ? 500 : 220, { color: 0xffb84d, size: 0.09, spread: 90, opacity: 0.5 })
   const dust2 = makePoints(tier === 2 ? 350 : 150, { color: 0x4fe3ff, size: 0.07, spread: 90, opacity: 0.45 })
   scene.add(dust, dust2)
 

@@ -10,17 +10,17 @@
     <polygon points="640,320 700,380 640,440 580,380" stroke="#ffe14d"/>
     <circle cx="300" cy="220" r="40" stroke="#ffe14d"/>
     <circle cx="980" cy="220" r="40" stroke="#4fe3ff"/>
-    <circle cx="300" cy="540" r="40" stroke="#ff4fa3"/>
+    <circle cx="300" cy="540" r="40" stroke="#ffb31e"/>
     <circle cx="980" cy="540" r="40" stroke="#8b5cf6"/>
     <circle cx="160" cy="380" r="22" stroke="#4fe3ff" opacity="0.6"/>
-    <circle cx="1120" cy="380" r="22" stroke="#ff4fa3" opacity="0.6"/>
+    <circle cx="1120" cy="380" r="22" stroke="#ffb31e" opacity="0.6"/>
   </g>
   <g fill="#4fe3ff"><circle cx="470" cy="300" r="6"/><circle cx="810" cy="460" r="6"/></g>
-  <g fill="#ff4fa3"><circle cx="470" cy="460" r="6"/><circle cx="810" cy="300" r="6"/></g>
+  <g fill="#ffb31e"><circle cx="470" cy="460" r="6"/><circle cx="810" cy="300" r="6"/></g>
   <g font-family="Arial Narrow, sans-serif" font-size="26" letter-spacing="4" text-anchor="middle">
     <text x="300" y="150" fill="#ffe14d">QC TRACKER</text>
     <text x="980" y="150" fill="#4fe3ff">AI CHATBOT</text>
-    <text x="300" y="620" fill="#ff4fa3">RETURN RISK</text>
+    <text x="300" y="620" fill="#ffb31e">RETURN RISK</text>
     <text x="980" y="620" fill="#8b5cf6">DATA PIPELINE</text>
   </g>
   <text x="60" y="90" font-family="Arial Narrow, sans-serif" font-size="44" letter-spacing="12" fill="#eef0ff" opacity="0.85">SIDE QUESTS · BUILT WITH AI</text>

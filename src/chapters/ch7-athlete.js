@@ -102,7 +102,7 @@ export async function build({ tier, station }) {
   // inter-titles around the arena
   ;['FLIP', 'LEAP', 'KICK', 'SPIN'].forEach((word, i) => {
     const a = (i / 4) * Math.PI * 2 + Math.PI / 4
-    const spr = textSprite(word, { color: i % 2 ? '#ffb7d5' : '#4fe3ff', px: 46 })
+    const spr = textSprite(word, { color: i % 2 ? '#ffd98a' : '#4fe3ff', px: 46 })
     spr.position.set(Math.cos(a) * 9, daisY + 3.4, station + Math.sin(a) * 9)
     spr.material.opacity = 0.5
     group.add(spr)

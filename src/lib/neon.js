@@ -7,8 +7,8 @@ import * as THREE from 'three'
 export const PALETTE = {
   bg: 0x0d0f1f,
   ink: 0x1a1f45,
-  pink: 0xff4fa3,
-  sakura: 0xffb7d5,
+  pink: 0xffb31e,
+  sakura: 0xffd98a,
   cyan: 0x4fe3ff,
   violet: 0x8b5cf6,
   gold: 0xffe14d

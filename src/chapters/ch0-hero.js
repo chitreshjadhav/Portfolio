@@ -49,7 +49,7 @@ export async function build({ world, tier, station }) {
   addOrbiter(neonBox(1.1, 1.1, 1.1, PALETTE.pink), 12.5, -0.12, 3.3, 0.2)
 
   // ---- particles ----
-  const p1 = makePoints(tier === 2 ? 500 : 240, { color: 0xff6fb3, size: 0.1, spread: 50, center: [0, 2, station] })
+  const p1 = makePoints(tier === 2 ? 500 : 240, { color: 0xffb84d, size: 0.1, spread: 50, center: [0, 2, station] })
   const p2 = makePoints(tier === 2 ? 380 : 170, { color: PALETTE.cyan, size: 0.08, spread: 50, center: [0, 2, station] })
   group.add(p1, p2)
 

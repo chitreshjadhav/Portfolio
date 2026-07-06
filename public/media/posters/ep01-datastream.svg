@@ -3,18 +3,18 @@
   <g fill="none" stroke-width="3" opacity="0.9">
     <path d="M-20 420 C 300 320, 500 520, 780 400 S 1200 300, 1320 380" stroke="#4fe3ff" opacity="0.7"/>
     <path d="M-20 460 C 300 360, 520 560, 800 440 S 1220 340, 1320 420" stroke="#8b5cf6" opacity="0.5"/>
-    <path d="M-20 380 C 320 280, 480 480, 760 360 S 1180 260, 1320 340" stroke="#ff4fa3" opacity="0.5"/>
+    <path d="M-20 380 C 320 280, 480 480, 760 360 S 1180 260, 1320 340" stroke="#ffb31e" opacity="0.5"/>
   </g>
   <g font-family="Arial Narrow, sans-serif" font-size="30" letter-spacing="4">
     <g stroke-width="2" fill="none">
       <rect x="180" y="330" width="130" height="46" rx="8" stroke="#4fe3ff"/>
       <rect x="420" y="430" width="110" height="46" rx="8" stroke="#ffe14d"/>
-      <rect x="660" y="350" width="110" height="46" rx="8" stroke="#ff4fa3"/>
+      <rect x="660" y="350" width="110" height="46" rx="8" stroke="#ffb31e"/>
       <rect x="900" y="300" width="130" height="46" rx="8" stroke="#8b5cf6"/>
     </g>
     <text x="205" y="362" fill="#4fe3ff">COLOR</text>
     <text x="450" y="462" fill="#ffe14d">SIZE</text>
-    <text x="700" y="382" fill="#ff4fa3">FIT</text>
+    <text x="700" y="382" fill="#ffb31e">FIT</text>
     <text x="922" y="332" fill="#8b5cf6">FABRIC</text>
   </g>
   <g fill="#4fe3ff" opacity="0.8">

@@ -9,7 +9,7 @@
   </g>
   <line x1="0" y1="520" x2="1280" y2="520" stroke="#232849" stroke-width="2"/>
   <!-- leaping silhouette between the gap -->
-  <g stroke="#ffb7d5" stroke-width="9" stroke-linecap="round">
+  <g stroke="#ffd98a" stroke-width="9" stroke-linecap="round">
     <line x1="600" y1="330" x2="660" y2="300"/>            <!-- spine, tilted into the jump -->
     <line x1="660" y1="300" x2="740" y2="330"/>            <!-- leading leg reaching -->
     <line x1="740" y1="330" x2="800" y2="300"/>
@@ -18,7 +18,7 @@
     <line x1="650" y1="305" x2="710" y2="250"/>            <!-- arm thrown forward -->
     <line x1="620" y1="320" x2="560" y2="290"/>
   </g>
-  <circle cx="680" cy="270" r="24" fill="none" stroke="#ffb7d5" stroke-width="8"/>
+  <circle cx="680" cy="270" r="24" fill="none" stroke="#ffd98a" stroke-width="8"/>
   <g stroke="#4fe3ff" stroke-width="3" opacity="0.6" fill="none">
     <path d="M420 420 C 500 360, 560 340, 620 330"/>
     <path d="M400 450 C 490 390, 560 365, 610 355"/>

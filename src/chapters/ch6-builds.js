@@ -13,7 +13,7 @@ export async function build({ tier, station }) {
   // four project stations at the compass points
   const stations = []
   const COLORS = [PALETTE.gold, PALETTE.cyan, PALETTE.pink, PALETTE.violet]
-  const HEXCOLORS = ['#ffe14d', '#4fe3ff', '#ff4fa3', '#8b5cf6']
+  const HEXCOLORS = ['#ffe14d', '#4fe3ff', '#ffb31e', '#8b5cf6']
   PROJECTS.forEach((proj, i) => {
     const a = (i / PROJECTS.length) * Math.PI * 2 + Math.PI / 4
     const node = new THREE.Group()

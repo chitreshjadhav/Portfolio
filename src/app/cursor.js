@@ -47,7 +47,7 @@ export function initCursorLens(caps, world) {
       y: Math.random() * h,
       s: 0.7 + Math.random() * 1.2,
       tw: Math.random() * Math.PI * 2,
-      c: ['#e8ecff', '#4fe3ff', '#ffb7d5'][(Math.random() * 3) | 0]
+      c: ['#e8ecff', '#4fe3ff', '#ffd98a'][(Math.random() * 3) | 0]
     }))
   }
   resize()
@@ -189,7 +189,7 @@ export function initCursorLens(caps, world) {
     const glow = ctx.createRadialGradient(0, 0, S, 0, 0, E * 2.7)
     glow.addColorStop(0, 'rgba(255, 176, 96, 0.07)')
     glow.addColorStop(0.6, 'rgba(255, 130, 120, 0.025)')
-    glow.addColorStop(1, 'rgba(255, 79, 163, 0)')
+    glow.addColorStop(1, 'rgba(255, 179, 30, 0)')
     ctx.globalAlpha = master
     ctx.fillStyle = glow
     ctx.beginPath(); ctx.arc(0, 0, E * 2.7, 0, Math.PI * 2); ctx.fill()
