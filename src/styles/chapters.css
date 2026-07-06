@@ -77,24 +77,36 @@ body.webgl-mode #top .overlay { pointer-events: none; }
 body.webgl-mode #top .overlay a,
 body.webgl-mode #top .overlay button { pointer-events: auto; }
 
-/* Specific overrides for Episode 4 to prevent the media frame from being cut off on standard viewports */
-#ep04 .overlay {
-  padding-top: 55px;
-  padding-bottom: 20px;
+/* ---------- fit the sticky stage: no chapter overflows 100svh ---------- */
+/* The stage is a centered, overflow:hidden 100svh box, so any overlay taller
+   than the viewport gets clipped at BOTH ends. The story chapters carry the
+   most (title + narration + fact panel + media window), so they get a tighter
+   vertical rhythm; the hero and contact are short and keep the roomy default. */
+.chapter:not(#top):not(#contact) .overlay {
+  padding-top: 44px;
+  padding-bottom: 26px;
 }
-#ep04 .panel {
-  padding-top: 18px;
-  padding-bottom: 18px;
-}
-#ep04 .status-screen {
-  margin-top: 10px;
-}
-#ep04 .media-frame {
-  margin-top: 10px;
-}
+.chapter:not(#top) .section-title { margin-top: 8px; margin-bottom: 8px; }
+.chapter .narration { margin-bottom: 14px; }
+.chapter .panel { padding-top: 18px; padding-bottom: 18px; }
+.chapter .media-frame { margin-top: 12px; }
 
-/* Origin: the college photo shares the stage with the education panel —
-   keep it compact so the sticky 100svh stage never clips it */
-#origin .overlay { padding-top: 55px; }
-#origin .media-frame { max-width: 380px; margin-top: 14px; }
+/* Content-dense chapters carry a fact panel AND a media window (ep04 adds a
+   stat strip too) — cap the window so it can't dominate and push itself off. */
+#ep02 .media-frame,
+#ep03 .media-frame,
+#ep04 .media-frame,
+#origin .media-frame { max-width: 320px; }
+#ep03 .panel li,
+#ep04 .panel li { font-size: 0.92rem; }
+/* ep04 is the busiest chapter (stat strip + panel + window) — trim a touch
+   more so it clears shorter 768px laptops too */
+#ep04 .media-frame { max-width: 288px; }
+#ep04 .status-screen { margin-top: 6px; }
+#ep04 .status-screen .stat { padding-top: 4px; padding-bottom: 4px; }
+
+/* After-hours: the portrait clip is the tallest element on the site — keep the
+   whole media row from pushing the intertitles off screen. */
+#afterhours .media-row .media-frame.lg[data-aspect="9/16"] { max-width: 190px; }
+#afterhours .media-row .media-frame.lg[data-aspect="16/9"] { max-width: 340px; }
 
