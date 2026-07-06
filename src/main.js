@@ -1,5 +1,9 @@
+import { inject } from '@vercel/analytics'
 import { detect } from './app/capabilities.js'
 import { initDossiers, initMotionToggle } from './app/a11y.js'
+
+// Initialize Vercel Web Analytics
+inject()
 
 const caps = detect()
 document.body.classList.add('js')
