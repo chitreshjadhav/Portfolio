@@ -247,6 +247,22 @@ export function initCursorLens(caps, world) {
     // Interstellar silhouette. Full redraw at reduced weight: no clip seams.
     diskBand(master * 0.6)
 
+    // Occult the UPPER half of the disk's central crossing: that part of the
+    // ring sits BEHIND the black hole, so it must be fully hidden — the near
+    // side only passes in FRONT of the shadow's lower half. Paint a solid,
+    // opaque void over the top-central region (radius inside the photon ring,
+    // so ring, arch and the outer disc lobes are untouched).
+    const occl = ctx.createRadialGradient(0, 0, 0, 0, 0, S)
+    occl.addColorStop(0, 'rgba(3, 2, 8, 1)')
+    occl.addColorStop(0.78, 'rgba(3, 2, 8, 1)')
+    occl.addColorStop(1, 'rgba(3, 2, 8, 0)')
+    ctx.save()
+    ctx.beginPath(); ctx.rect(-S, -S, 2 * S, S); ctx.clip() // upper half only
+    ctx.globalAlpha = master
+    ctx.fillStyle = occl
+    ctx.beginPath(); ctx.arc(0, 0, S, 0, Math.PI * 2); ctx.fill()
+    ctx.restore()
+
     ctx.restore()
     ctx.globalAlpha = 1
     ctx.globalCompositeOperation = 'source-over'
