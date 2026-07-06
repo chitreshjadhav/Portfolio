@@ -63,17 +63,22 @@ export function initScroll(world) {
     })
   })
 
-  // Anchor links (rail dots + top nav) land MID-chapter, not at the sticky
-  // section's first frame — at progress 0 the overlay copy is still faded out,
-  // so a native jump looked like a dead click. 40% in, the text is fully up.
+  // Anchor links (hero CTA + rail dots + top nav) smooth-scroll to their
+  // target. Sticky chapters land MID-chapter (40% in) — at progress 0 the
+  // overlay copy is still faded out, so a native jump looked like a dead
+  // click. Plain in-page sections like #about land at their top.
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     const href = a.getAttribute('href')
     if (!href || href.length < 2) return
     a.addEventListener('click', e => {
       const sec = document.querySelector(href)
-      if (!sec || !sec.classList.contains('chapter') || sec.id === 'top') return
+      if (!sec || sec.id === 'top') return
+      const isChapter = sec.classList.contains('chapter')
+      if (!isChapter && sec.tagName !== 'SECTION') return
       e.preventDefault()
-      const y = sec.offsetTop + Math.max(0, (sec.offsetHeight - innerHeight) * 0.4)
+      const y = isChapter
+        ? sec.offsetTop + Math.max(0, (sec.offsetHeight - innerHeight) * 0.4)
+        : sec.offsetTop
       window.scrollTo({ top: y, behavior: 'smooth' })
       history.replaceState(null, '', href)
     })
